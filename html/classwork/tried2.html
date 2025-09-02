@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="category-navigation">
+
+  <!-- New Arrivals -->
+  <a href="/collections/new-arrivals" class="category-item">
+    <div class="category-icon new-arrivals"></div>
+    <div class="category-title">NEW<br>ARRIVALS</div>
+  </a>
+
+  <!-- Oversized Tees -->
+  <a href="/collections/oversized-t-shirts" class="category-item">
+    <div class="category-icon oversized-tees"></div>
+    <div class="category-title">OVERSIZED<br>TEES</div>
+  </a>
+
+  <!-- Regular Tees -->
+  <a href="/collections/regular-fit-t-shirts" class="category-item">
+    <div class="category-icon regular-tees"></div>
+    <div class="category-title">REGULAR<br>TEES</div>
+  </a>
+
+  <!-- Minimalist -->
+  <a href="/collections/minimalist-drip-loud-in-silence" class="category-item">
+    <div class="category-icon minimalist"></div>
+    <div class="category-title">MINIMALIST</div>
+  </a>
+
+</div>
+
+<style>
+  .category-navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 10px;
+    background: #f8f8f8;
+    overflow-x: auto;
+    border-bottom: 1px solid #eee;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    gap: 12px;
+  }
+
+  .category-item {
+    flex: 0 0 auto;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 90px;
+  }
+
+  .category-item:hover {
+    background-color: #e9e9e9;
+    transform: translateY(-3px);
+    color: #007bff;
+  }
+
+  .category-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 8px auto;
+    background-size: cover !important; /* ensure icon fills circle */
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .category-item:hover .category-icon {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+
+  /* Replace these with your Shopify CDN asset URLs */
+  .new-arrivals {
+    background-image: url("{{ 'newarrival_png.jpg' | asset_url }}");
+    background-color: #ff6b6b;
+  }
+
+  .oversized-tees {
+    background-image: url("{{ 'oversizedtees_png.png' | asset_url }}");
+    background-color: #4ecdc4;
+  }
+
+  .regular-tees {
+    background-image: url("{{ 'regulartees_png.png' | asset_url }}");
+    background-color: #45b7d1;
+  }
+
+  .minimalist {
+    background-image: url("{{ 'minimalist_png.png' | asset_url }}");
+    background-color: #a7a7a7;
+  }
+
+  .category-title {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.3;
+    color: #555;
+  }
+
+  .category-item:hover .category-title {
+    color: #007bff;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .category-navigation {
+      justify-content: flex-start;
+      overflow-x: scroll;
+    }
+    .category-item {
+      width: 80px;
+      font-size: 12px;
+    }
+    .category-icon {
+      width: 55px;
+      height: 55px;
+    }
+  }
+</style>
+
+</body>
+</html>

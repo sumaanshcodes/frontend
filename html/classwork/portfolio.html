@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sumansh Yadav - Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      background-color: #0d0d0d;
+    }
+
+    /* Particle background canvas */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      border-bottom: 2px solid #00f0ff;
+      box-shadow: 0 0 20px #00f0ff;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #00f0ff;
+      box-shadow: 0 0 20px #00f0ff;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    header h2 {
+      color: #00f0ff;
+      font-weight: normal;
+      font-size: 1.2rem;
+      min-height: 1.2rem;
+    }
+
+    section {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem 1rem;
+      border-bottom: 1px solid #222;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    h3 {
+      color: #00f0ff;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: #00f0ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      border-top: 1px solid #00f0ff;
+    }
+
+    .skills, .soft-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .skill-badge {
+      background: #1a1a1a;
+      border: 1px solid #00f0ff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      transition: 0.3s ease;
+      box-shadow: 0 0 5px #00f0ff;
+    }
+
+    .skill-badge:hover {
+      background: #00f0ff;
+      color: #000;
+      box-shadow: 0 0 20px #00f0ff;
+    }
+
+    /* Typing Animation */
+    .typing {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid #00f0ff;
+      white-space: nowrap;
+      animation: typing 3s steps(40, end), blink 0.7s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    /* Project Cards */
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid #00f0ff;
+      box-shadow: 0 0 10px #00f0ff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px #00f0ff;
+    }
+
+    .project-card h4 {
+      color: #00f0ff;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card p {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card a {
+      color: #fff;
+      background: #00f0ff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .project-card a:hover {
+      background: #00c4d4;
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <header>
+    <h1>Sumansh Yadav</h1>
+    <h2 class="typing">Aspiring Backend Developer</h2>
+    <p>Mathura, Uttar Pradesh</p>
+    <img src="new photo..1.jpg" alt="Profile Picture" width="150" 
+     style="display:block; margin:20px auto; border-radius:50%; border:3px solid #00ffcc;">
+
+  </header>
+
+  <section>
+    <h3>About Me</h3>
+    <p>Hi, I’m <strong>Sumansh Yadav</strong> — a passionate B.Tech CSE student and aspiring Full Stack Developer.
+    I specialize in backend engineering with Java and Python, and I’m currently mastering modern web technologies like React and Spring Boot.
+    My goal is to build impactful, scalable applications that solve real-world problems.</p>
+  </section>
+
+  <section>
+    <h3>Technical Skills</h3>
+    <div class="skills">
+      <span class="skill-badge">Java</span>
+      <span class="skill-badge">Python</span>
+      <span class="skill-badge">React (Learning)</span>
+      <span class="skill-badge">Spring Boot (Learning)</span>
+      <span class="skill-badge">HTML</span>
+      <span class="skill-badge">CSS</span>
+      <span class="skill-badge">JavaScript</span>
+      <span class="skill-badge">MySQL</span>
+      <span class="skill-badge">Git</span>
+      <span class="skill-badge">GitHub</span>
+      <span class="skill-badge">IntelliJ IDEA</span>
+      <span class="skill-badge">VS Code</span>
+    </div>
+  </section>
+
+  <section>
+    <h3>Soft Skills</h3>
+    <div class="soft-skills">
+      <span class="skill-badge">Communication</span>
+      <span class="skill-badge">Problem Solving</span>
+      <span class="skill-badge">Team Collaboration</span>
+    </div>
+  </section>
+
+  <section>
+    <h3>Projects</h3>
+    <div class="projects-container">
+      <div class="project-card">
+        <h4>Student Grade Tracker</h4>
+        <p>A desktop application developed using <b>Java Swing</b> that allows students to add, edit, and manage grades with an interactive graphical interface.</p>
+        <a href="https://github.com/sumaanshcodes/student-grade-tracker" target="_blank">View Project</a>
+      </div>
+       <div class="project-card">
+        <h4>Hostel Management System</h4>
+      <p>A <b>Java-based</b> system designed to manage hostel operations such as student details, room allocation, and fee tracking efficiently.</p>
+
+        <a href="https://github.com/sumaanshcodes" target="_blank">View Project</a>
+      </div>
+      <div class="project-card">
+        <h4>Portfolio Website</h4>
+        <p>A responsive personal portfolio showcasing skills, projects, and achievements.</p>
+        <a href="https://github.com/sumaanshcodes" target="_blank">View Project</a>
+      </div>
+      
+      <div class="project-card">
+        <h4>Java Backend API</h4>
+        <p>Spring Boot API for managing user data with MySQL integration.</p>
+        <a href="https://github.com/sumaanshcodes" target="_blank">View Project</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Education</h3>
+    <p><strong>B.Tech in Computer Science & Engineering</strong><br>
+    GLA University, Mathura</p>
+  </section>
+
+  <section>
+    <h3>Contact</h3>
+    <ul>
+      <li>Email: <a href="mailto:sumanshyadav.1807@gmail.com">sumanshyadav.1807@gmail.com</a></li>
+      <li>LinkedIn: <a href="https://www.linkedin.com/in/sumanshyadav/" target="_blank">linkedin.com/in/sumanshyadav</a></li>
+      <li>GitHub: <a href="https://github.com/sumaanshcodes" target="_blank">github.com/sumaanshcodes</a></li>
+      <li>Instagram: <a href="https://www.instagram.com/ydv_sumansh_09/" target="_blank">@ydv_sumansh_09</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    &copy; 2025 Sumansh Yadav | Built with ❤️ in Tech Style
+  </footer>
+
+  <!-- Particle.js Library -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00f0ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#00f0ff", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 3 }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

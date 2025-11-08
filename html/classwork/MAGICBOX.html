@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Moving Box</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: #4CAF50;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            transition: top 0.5s ease, left 0.5s ease;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+
+    <script>
+        const box = document.getElementById('box');
+        let step = 0;
+
+        box.addEventListener('click', () => {
+            const margin = 20;
+            const boxSize = 100;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            if(step === 0) {
+                // Move to top-right
+                box.style.left = (width - boxSize - margin) + "px";
+            } else if(step === 1) {
+                // Move to bottom-right
+                box.style.top = (height - boxSize - margin) + "px";
+            } else if(step === 2) {
+                // Move to bottom-left
+                box.style.left = margin + "px";
+            } else if(step === 3) {
+                // Move back to top-left
+                box.style.top = margin + "px";
+            }
+
+            step = (step + 1) % 4; // loop through 0 to 3
+        });
+    </script>
+</body>
+</html>

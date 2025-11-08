@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Disease Risk Predictor – Interactive UI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            gap: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            margin: 20px;
+        }
+        .form-section {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .output-section {
+            width: 600px;
+            display: flex;
+            gap: 20px;
+        }
+        .card {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .card h3 {
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            color: #3498db;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        input, select, button {
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Form Inputs -->
+        <div class="form-section">
+            <h2>User Information</h2>
+            <input type="number" id="age" placeholder="Age" />
+            <input type="number" step="0.1" id="bmi" placeholder="BMI" />
+            <input type="number" step="1" id="bp" placeholder="Blood Pressure" />
+            <input type="number" step="0.1" id="sugar" placeholder="Sugar Level" />
+            <input type="text" id="history" placeholder="Family History (heart/diabetes etc.)" />
+            <select id="exercise">
+                <option value="low">Exercise: Low</option>
+                <option value="medium">Exercise: Medium</option>
+                <option value="high">Exercise: High</option>
+            </select>
+            <select id="smoking">
+                <option value="yes">Smoking: Yes</option>
+                <option value="no">Smoking: No</option>
+            </select>
+            <select id="mood">
+                <option value="good">Mood: Good</option>
+                <option value="okay">Mood: Okay</option>
+                <option value="bad">Mood: Bad</option>
+            </select>
+            <input type="text" id="trouble" placeholder="Describe any trouble" />
+            <button onclick="getPrediction()">Predict</button>
+        </div>
+
+        <!-- Output Section -->
+        <div class="output-section">
+            <!-- English Card -->
+            <div class="card" id="englishCard">
+                <h3>Prediction – English</h3>
+                <div id="resultEng"></div>
+            </div>
+
+            <!-- Hinglish Card -->
+            <div class="card" id="hinglishCard">
+                <h3>Prediction – Hinglish</h3>
+                <div id="resultHin"></div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <h3>Precautions & Tips</h3>
+                <div id="tips"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const wishes = [
+            "Stay strong and healthy every day!",
+            "Eat balanced meals for a healthier life!",
+            "Drink plenty of water and stay hydrated!",
+            "Take short breaks and relax during the day!",
+            "Exercise regularly to keep your heart healthy!",
+            "Avoid smoking for a better lifestyle!",
+            "Get enough sleep to boost your immunity!",
+            "Practice mindfulness and meditation for mental health!",
+            "Stay positive and enjoy the small joys of life!",
+            "Control stress to avoid health complications!",
+            "Eat fruits and vegetables daily for essential nutrients!",
+            "Monitor your blood pressure regularly!",
+            "Limit sugar intake for better metabolic health!",
+            "Keep a regular check on cholesterol levels!",
+            "Stay away from processed foods!",
+            "Maintain a healthy weight to prevent diseases!",
+            "Listen to your body and rest when needed!",
+            "Stay connected with loved ones for emotional support!",
+            "Schedule regular health checkups!",
+            "Include whole grains and fiber in your diet!",
+            "Manage time wisely to avoid overworking!",
+            "Practice gratitude to enhance emotional well-being!",
+            "Keep learning about healthy habits every day!",
+            "Stay active, even light walks improve circulation!",
+            "Celebrate small health victories!"
+        ];
+
+        function getRandomWish() {
+            if(wishes.length === 0) return "Stay healthy!";
+            let index = Math.floor(Math.random() * wishes.length);
+            let wish = wishes[index];
+            wishes.splice(index, 1);
+            return wish;
+        }
+
+        function getPrediction() {
+            const data = {
+                age: parseInt(document.getElementById('age').value),
+                bmi: parseFloat(document.getElementById('bmi').value),
+                bp: parseInt(document.getElementById('bp').value),
+                sugar: parseFloat(document.getElementById('sugar').value),
+                history: document.getElementById('history').value.trim(),
+                exercise: document.getElementById('exercise').value,
+                smoking: document.getElementById('smoking').value,
+                mood: document.getElementById('mood').value,
+                trouble: document.getElementById('trouble').value.trim()
+            };
+
+            // For demonstration simulate backend response
+            simulateBackendResponse(data);
+        }
+
+        function simulateBackendResponse(data) {
+            let risk = Math.min(100, (data.age/100*20) + (data.bmi/40*25) + (data.bp/200*15) + (data.sugar/300*15) + (data.smoking === "yes" ? 10 : 0));
+            let diseases = [];
+
+            if(data.bmi > 28 || data.bp > 140 || data.sugar > 150) {
+                diseases.push("Heart Attack", "Diabetes");
+            }
+            if(data.history.toLowerCase().includes("stroke")) {
+                diseases.push("Stroke");
+            }
+            if(data.history.toLowerCase().includes("cancer")) {
+                diseases.push("Cancer");
+            }
+            if(data.history.toLowerCase().includes("kidney")) {
+                diseases.push("Kidney Disease");
+            }
+            if(data.history.toLowerCase().includes("liver")) {
+                diseases.push("Liver Problem");
+            }
+            if(diseases.length === 0) {
+                diseases.push("No major disease detected");
+            }
+
+            // English Output
+            let resultEng = `<b>Estimated Risk:</b> ${risk.toFixed(2)}%<br>`;
+            resultEng += `<b>Possible Diseases:</b> ${diseases.join(", ")}<br>`;
+            resultEng += `<b>Precautions:</b> Eat healthy, exercise, and rest well.<br>`;
+            resultEng += `<b>Wish:</b> ${getRandomWish()}`;
+
+            document.getElementById('resultEng').innerHTML = resultEng;
+
+            // Hinglish Output
+            let resultHin = `Aapka risk hai: ${risk.toFixed(2)}%<br>`;
+            resultHin += `Sambhavit bimariyan: ${diseases.join(", ")}<br>`;
+            resultHin += `Sujhav: Achha khana khayein, exercise karein, aur aaram karein.<br>`;
+            resultHin += `Shubhkamna: ${getRandomWish()}`;
+
+            document.getElementById('resultHin').innerHTML = resultHin;
+
+            // Sidebar Suggestions
+            let tips = `<ul>`;
+            if(data.bp > 140) {
+                tips += `<li>Blood pressure zyada hai – doctor se salah lein.</li>`;
+            }
+            if(data.sugar > 150) {
+                tips += `<li>Sugar level zyada hai – meethe cheezon se bachein.</li>`;
+            }
+            if(data.smoking === "yes") {
+                tips += `<li>Smoking band karein, ye sehat ke liye hanikarak hai.</li>`;
+            }
+            if(data.mood === "bad") {
+                tips += `<li>Man ko shant karne ke liye relaxation techniques apnayein.</li>`;
+            }
+            if(data.trouble.length > 0) {
+                tips += `<li>Agar koi health problem hai to turant doctor se sampark karein.</li>`;
+            }
+            tips += `<li>Rozana exercise aur balanced diet follow karein.</li>`;
+            tips += `</ul>`;
+            document.getElementById('tips').innerHTML = tips;
+        }
+    </script>
+</body>
+</html>

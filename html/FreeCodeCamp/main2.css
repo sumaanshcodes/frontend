@@ -1,0 +1,42 @@
+p.{
+
+    color: blue;
+    font-size: 20px;    
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: lightgrey;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px grey;
+
+}
+h1 {
+    color: green;
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    background-color: lightyellow;
+    border: 2px solid black;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px grey;
+}
+body {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+a {
+    color: red;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* This is a comment in CSS */
+/* End of CSS file */

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLAU - Your Gateway to Tech Careers</title>
+    <link rel="stylesheet" href="styles8.css">
+    <link href="https://fonts.googleapis.com/css2?family=Broadway:wght@400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function(){
+            // Optional: initialize EmailJS if you later provide your keys in script.js
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="logo">GLAU</h1>
+            </div>
+            <div class="header-right">
+                <div class="my-course-section">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>My Course</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#new-courses" class="nav-link">
+                        <i class="fas fa-star"></i>
+                        <span>New Courses</span>
+                    </a>
+                </li>
+                <li class="nav-item has-sub">
+                    <a href="#frontend" class="nav-link">
+                        <i class="fas fa-code"></i>
+                        <span>Frontend Development</span>
+                    </a>
+                    <ul class="sub-menu" id="frontendSubmenu"></ul>
+                </li>
+                <li class="nav-item has-sub">
+                    <a href="#backend" class="nav-link">
+                        <i class="fas fa-server"></i>
+                        <span>Backend Development</span>
+                    </a>
+                    <ul class="sub-menu" id="backendSubmenu"></ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#placement" class="nav-link">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Placement Guide</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#resources" class="nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#community" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <!-- Demo Courses Banner -->
+            <div class="demo-banner">
+                <h2>Featured Courses</h2>
+                <div class="banner-container">
+                    <div class="banner-scroll" id="bannerScroll">
+                        <div class="banner-item">
+                            <div class="banner-card">
+                                <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="React Course">
+                                <div class="banner-content">
+                                    <h3>React Mastery</h3>
+                                    <p>Complete React development course</p>
+                                    <span class="price">₹2,999</span>
+                                    <button class="buy-btn" data-course="React Mastery">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-item">
+                            <div class="banner-card">
+                                <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Node.js Course">
+                                <div class="banner-content">
+                                    <h3>Node.js Expert</h3>
+                                    <p>Backend development with Node.js</p>
+                                    <span class="price">₹3,499</span>
+                                    <button class="buy-btn" data-course="Node.js Expert">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-item">
+                            <div class="banner-card">
+                                <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Python Course">
+                                <div class="banner-content">
+                                    <h3>Python Pro</h3>
+                                    <p>Master Python programming</p>
+                                    <span class="price">₹2,499</span>
+                                    <button class="buy-btn" data-course="Python Pro">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-item">
+                            <div class="banner-card">
+                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop" alt="AI/ML Course">
+                                <div class="banner-content">
+                                    <h3>AI & ML</h3>
+                                    <p>Artificial Intelligence & Machine Learning</p>
+                                    <span class="price">₹4,999</span>
+                                    <button class="buy-btn" data-course="AI & ML">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="banner-item">
+                            <div class="banner-card">
+                                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop" alt="Data Science Course">
+                                <div class="banner-content">
+                                    <h3>Data Science</h3>
+                                    <p>Complete Data Science journey</p>
+                                    <span class="price">₹3,999</span>
+                                    <button class="buy-btn" data-course="Data Science">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="scroll-btn prev" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="scroll-btn next" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Frontend Development Section -->
+            <section class="course-section" id="frontend">
+                <h2>Frontend Development</h2>
+                <div class="course-grid">
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1200&auto=format&fit=crop" alt="HTML CSS Course">
+                        <div class="course-content">
+                            <h3>HTML & CSS Fundamentals</h3>
+                            <p>Learn the basics of web development</p>
+                            <div class="course-meta">
+                                <span class="duration"><i class="fas fa-clock"></i> 4 weeks</span>
+                                <span class="level">Beginner</span>
+                            </div>
+                            <button class="enroll-btn buy-btn" data-course="HTML & CSS Fundamentals">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="JavaScript Course">
+                        <div class="course-content">
+                            <h3>JavaScript Mastery</h3>
+                            <p>Complete JavaScript programming course</p>
+                            <div class="course-meta">
+                                <span class="duration"><i class="fas fa-clock"></i> 6 weeks</span>
+                                <span class="level">Intermediate</span>
+                            </div>
+                            <button class="enroll-btn buy-btn" data-course="JavaScript Mastery">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop" alt="React Course">
+                        <div class="course-content">
+                            <h3>React.js Development</h3>
+                            <p>Build modern web applications with React</p>
+                            <div class="course-meta">
+                                <span class="duration"><i class="fas fa-clock"></i> 8 weeks</span>
+                                <span class="level">Advanced</span>
+                            </div>
+                            <button class="enroll-btn buy-btn" data-course="React.js Development">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Backend Development Section -->
+            <section class="course-section" id="backend">
+                <h2>Backend Development</h2>
+                <div class="course-grid">
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=80&w=1200&auto=format&fit=crop" alt="Node.js Course">
+                        <div class="course-content">
+                            <h3>Node.js & Express</h3>
+                            <p>Server-side JavaScript development</p>
+                            <div class="course-meta">
+                                <span class="duration"><i class="fas fa-clock"></i> 6 weeks</span>
+                                <span class="level">Intermediate</span>
+                            </div>
+                            <button class="enroll-btn buy-btn" data-course="Node.js & Express">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" alt="Python Django Course">
+                        <div class="course-content">
+                            <h3>Python & Django</h3>
+                            <p>Full-stack development with Python</p>
+                            <div class="course-meta">
+                                <span class="duration"><i class="fas fa-clock"></i> 8 weeks</span>
+                                <span class="level">Advanced</span>
+                            </div>
+                            <button class="enroll-btn buy-btn" data-course="Python & Django">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop" alt="Database Course">
+                        <div class="course-content">
+                            <h3>Database Design</h3>
+                            <p>SQL, MongoDB, and database optimization</p>
+                            <div class="course-meta">
+                                <span class="duration"><i class="fas fa-clock"></i> 5 weeks</span>
+                                <span class="level">Intermediate</span>
+                            </div>
+                            <button class="enroll-btn buy-btn" data-course="Database Design">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- New Courses Section -->
+        <section id="new-courses" class="content-section">
+            <div class="page-header">
+                <h1>New Courses - Company Placements</h1>
+                <p>Get placed in top tech companies with our specialized courses</p>
+            </div>
+            <div class="company-grid" id="companyGrid">
+                <!-- Company cards will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="content-section">
+            <div class="page-header">
+                <h1>Free Resources</h1>
+                <p>High-quality, copyright-free learning resources</p>
+            </div>
+            <div class="company-content" style="background:white;border-radius:20px;padding:2rem;box-shadow:0 10px 40px rgba(0,0,0,0.08)">
+                <div class="section-title">Frontend</div>
+                <ul class="roadmap-steps">
+                    <li><a href="https://developer.mozilla.org/" target="_blank" rel="noopener">MDN Web Docs</a> — Authoritative docs for HTML, CSS, JS</li>
+                    <li><a href="https://web.dev/learn/" target="_blank" rel="noopener">web.dev/learn</a> — Free courses by Google</li>
+                    <li><a href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener">freeCodeCamp</a> — Interactive curriculum</li>
+                </ul>
+                <div class="section-title">Backend</div>
+                <ul class="roadmap-steps">
+                    <li><a href="https://nodejs.org/en/docs" target="_blank" rel="noopener">Node.js Docs</a> — Official documentation</li>
+                    <li><a href="https://www.postgresql.org/docs/" target="_blank" rel="noopener">PostgreSQL Docs</a> — Database fundamentals</li>
+                    <li><a href="https://dev.mysql.com/doc/" target="_blank" rel="noopener">MySQL Docs</a> — SQL references</li>
+                </ul>
+                <div class="section-title">CS & Interview</div>
+                <ul class="roadmap-steps">
+                    <li><a href="https://github.com/donnemartin/system-design-primer" target="_blank" rel="noopener">System Design Primer</a> — Open-source guide</li>
+                    <li><a href="https://leetcode.com/explore/" target="_blank" rel="noopener">LeetCode Explore</a> — Structured DSA paths</li>
+                    <li><a href="https://roadmap.sh/" target="_blank" rel="noopener">roadmap.sh</a> — Career roadmaps</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section">
+            <div class="page-header">
+                <h1>Your Profile</h1>
+                <p>Tell us about you. We'll reach out on email.</p>
+            </div>
+            <div class="company-content" style="background:white;border-radius:20px;padding:2rem;box-shadow:0 10px 40px rgba(0,0,0,0.08)">
+                <form id="profileForm" class="profile-form">
+                    <div class="form-row">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" />
+                    </div>
+                    <div class="form-row">
+                        <label for="interest">Area of Interest</label>
+                        <select id="interest" name="interest">
+                            <option>Frontend</option>
+                            <option>Backend</option>
+                            <option>Data Science</option>
+                            <option>AI/ML</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Tell us what you are looking for..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="enroll-btn">Submit</button>
+                    </div>
+                    <p class="form-note">We will send your details to: yadavsumansh@gmail.com</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- AI Chatbot -->
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chatbot-toggle" id="chatbotToggle">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="chatbot-window" id="chatbotWindow">
+                <div class="chatbot-header">
+                    <h3>GLAU Assistant</h3>
+                    <button class="close-chatbot" id="closeChatbot">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="chatbot-messages" id="chatbotMessages">
+                    <div class="message bot-message">
+                        <p>Hello! I'm your GLAU assistant. How can I help you today?</p>
+                    </div>
+                </div>
+                <div class="chatbot-input">
+                    <input type="text" id="chatInput" placeholder="Ask me anything about programming or courses...">
+                    <button id="sendMessage">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GLAU</h3>
+                <p>Your gateway to successful tech careers</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> contact@glau.com</p>
+                <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 GLAU. All rights reserved. | Created by Sumansh Yadav</p>
+        </div>
+    </footer>
+
+    <script src="script1.js"></script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CollegePaglu - Your Learning Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2; /* A vibrant blue */
+            --secondary-color: #6A5ACD; /* A rich purple */
+            --accent-color: #FFD700; /* Gold for highlights */
+            --background-light: #F0F4F8; /* Light gray-blue */
+            --background-dark: #2C3E50; /* Dark blue-gray for contrast */
+            --text-dark: #34495E;
+            --text-light: #ECF0F1;
+            --card-background: #FFFFFF;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.2);
+            --shadow-strong: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--background-light), #DAE3ED);
+            color: var(--text-dark);
+            transition: background 0.5s ease;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            color: var(--text-light);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 4px 15px var(--shadow-strong);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--accent-color);
+        }
+        header .nav-link {
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        header .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: var(--accent-color);
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px; /* Increased width */
+            width: 280px;
+            height: 100%;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            transition: left 0.4s ease-in-out;
+            padding-top: 70px; /* Adjust for header */
+            box-shadow: 4px 0 15px var(--shadow-strong);
+            z-index: 999;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar a {
+            display: block;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 17px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: background 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+            padding-left: 35px;
+        }
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--accent-color);
+            padding: 5px;
+        }
+        .content {
+            margin-left: 0;
+            transition: margin-left 0.4s ease-in-out;
+            padding: 20px 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .content.active {
+            margin-left: 280px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 80px 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 8px var(--shadow-strong);
+        }
+        .hero p {
+            font-size: 1.3em;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            opacity: 0.9;
+        }
+        .hero .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .hero .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            background-color: #FFEB3B;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Image Carousels */
+        .banner, .scrollbar {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            gap: 20px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            margin-bottom: 40px;
+        }
+        .banner::-webkit-scrollbar, .scrollbar::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, Opera */
+        }
+        .banner img, .scrollbar img {
+            min-width: 350px; /* Ensure images are a decent size */
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 6px 15px var(--shadow-light);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+        }
+        .banner img:hover, .scrollbar img:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 25px var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+
+        .section {
+            margin-top: 50px;
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+        }
+        .section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            text-align: center;
+            position: relative;
+        }
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+        .card {
+            background-color: var(--background-light); /* Lighter background for cards */
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            padding: 25px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #E0E7EB;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+        .card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            background-color: var(--card-background);
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            color: var(--secondary-color);
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .card p {
+            font-size: 0.95em;
+            color: var(--text-dark);
+            opacity: 0.85;
+        }
+        .card p b {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            margin-top: 50px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: var(--text-light);
+            padding: 60px 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+        .testimonials h2 {
+            color: var(--accent-color);
+            margin-bottom: 40px;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .testimonial-card blockquote {
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 20px;
+        }
+        .testimonial-card blockquote::before {
+            content: '“';
+            font-size: 3em;
+            position: absolute;
+            left: 0;
+            top: -10px;
+            color: var(--accent-color);
+            opacity: 0.7;
+        }
+        .testimonial-card .author {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1em;
+        }
+        .testimonial-card .role {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+
+        .chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 6px 15px var(--shadow-medium);
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        .chatbot:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px) scale(1.05);
+        }
+        .chat-window {
+            position: fixed;
+            bottom: 100px; /* Adjust to be above the chatbot button */
+            right: 30px;
+            width: 350px;
+            max-height: 450px;
+            background-color: var(--card-background);
+            border: 1px solid #DCE3E7;
+            border-radius: 15px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            animation: fadeInScale 0.4s ease-out;
+            box-shadow: 0 10px 30px var(--shadow-strong);
+            z-index: 1002;
+        }
+        .chat-window.active {
+            display: flex;
+        }
+        @keyframes fadeInScale {
+            from {opacity: 0; transform: translateY(20px) scale(0.95);}
+            to {opacity: 1; transform: translateY(0) scale(1);}
+        }
+        .chat-header {
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            color: var(--text-light);
+            padding: 12px 15px;
+            font-weight: 600;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .chat-header .close-btn:hover {
+            color: var(--accent-color);
+        }
+        .chat-messages {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: #F8FCFF;
+        }
+        .chat-message-user, .chat-message-bot {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .chat-message-user {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        .chat-message-bot {
+            background-color: #E0E7EB;
+            color: var(--text-dark);
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #E0E7EB;
+            padding: 10px;
+            background-color: var(--card-background);
+        }
+        .chat-input input {
+            flex-grow: 1;
+            border: 1px solid #DCE3E7;
+            border-radius: 20px;
+            padding: 10px 15px;
+            outline: none;
+            font-size: 1em;
+            margin-right: 10px;
+            transition: border-color 0.3s ease;
+        }
+        .chat-input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+        .chat-input button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .chat-input button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: linear-gradient(90deg, var(--background-dark), #34495E);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 0.9em;
+            line-height: 1.8;
+            box-shadow: 0 -4px 15px var(--shadow-strong);
+        }
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content.active {
+                margin-left: 0; /* Sidebar overlays on smaller screens */
+            }
+            .sidebar {
+                box-shadow: 0 0 20px var(--shadow-strong);
+            }
+            .hero h1 {
+                font-size: 2.8em;
+            }
+            .hero p {
+                font-size: 1.1em;
+            }
+            .section h2 {
+                font-size: 2em;
+            }
+            .banner img, .scrollbar img {
+                min-width: 300px;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 15px;
+            }
+            header .logo {
+                font-size: 24px;
+            }
+            header .nav-link {
+                display: none; /* Hide 'My Courses' link, accessible via sidebar */
+            }
+            .menu-btn {
+                font-size: 26px;
+            }
+            .hero {
+                padding: 60px 20px;
+            }
+            .hero h1 {
+                font-size: 2.2em;
+            }
+            .hero p {
+                font-size: 1em;
+            }
+            .section {
+                padding: 20px;
+            }
+            .section h2 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            .cards {
+                grid-template-columns: 1fr; /* Single column on mobile */
+            }
+            .card {
+                width: auto;
+            }
+            .banner img, .scrollbar img {
+                min-width: 250px;
+                height: 150px;
+            }
+            .chat-window {
+                width: calc(100% - 40px);
+                right: 20px;
+                bottom: 90px;
+                max-height: 60vh;
+            }
+            .chatbot {
+                bottom: 20px;
+                right: 20px;
+                padding: 15px;
+                font-size: 20px;
+            }
+            .testimonials {
+                padding: 40px 20px;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span class="menu-btn" onclick="toggleSidebar()">&#9776;</span>
+    <div class="logo">CollegePaglu</div>
+    <a href="#" class="nav-link">My Courses</a>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <a href="#">🚀 New Courses</a>
+    <a href="#">📈 Placement Roadmap</a>
+    <a href="#">🎉 Events</a>
+    <a href="#">💼 Internship Opportunities</a>
+    <a href="#">📚 Study Resources</a>
+    <a href="#">📞 Contact Us</a>
+    <a href="#">ℹ️ About CollegePaglu</a>
+    <a href="#">❓ Help & Support</a>
+</div>
+
+<div class="content" id="content">
+    <div class="hero">
+        <h1>Unlock Your Potential with CollegePaglu!</h1>
+        <p>Your one-stop destination for cutting-edge courses, career roadmaps, and placement guidance. Start your journey to success today!</p>
+        <a href="#" class="cta-button">Explore Courses</a>
+    </div>
+
+    <div class="banner">
+        <img src="https://source.unsplash.com/600x350/?education,learning,campus" alt="Students studying together">
+        <img src="https://source.unsplash.com/600x350/?technology,coding,laptop" alt="Person coding on a laptop">
+        <img src="https://source.unsplash.com/600x350/?books,library,students" alt="Books in a college library">
+        <img src="https://source.unsplash.com/600x350/?student,success,graduation" alt="Graduation ceremony">
+    </div>
+
+    <div class="section">
+        <h2>Featured Learning Paths</h2>
+        <div class="scrollbar">
+            <img src="https://source.unsplash.com/400x250/?web-development" alt="Web Development">
+            <img src="https://source.unsplash.com/400x250/?data-science" alt="Data Science">
+            <img src="https://source.unsplash.com/400x250/?cybersecurity" alt="Cybersecurity">
+            <img src="https://source.unsplash.com/400x250/?machine-learning" alt="Machine Learning">
+            <img src="https://source.unsplash.com/400x250/?cloud-computing" alt="Cloud Computing">
+        </div>
+    </div>
+
+
+    <div class="section">
+        <h2>Frontend Development</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/html-5--v1.png" alt="HTML CSS Icon">
+                <h3>HTML & CSS Fundamentals</h3>
+                <p>Master the building blocks of the web. Create beautiful and responsive websites from scratch.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/javascript--v1.png" alt="JavaScript Icon">
+                <h3>JavaScript & DOM Manipulation</h3>
+                <p>Add interactivity and dynamic features to your web pages with core JavaScript concepts.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/react--v1.png" alt="React Icon">
+                <h3>React.js for Dynamic UIs</h3>
+                <p>Build modern, high-performance user interfaces using the popular React library.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/bootstrap.png" alt="Bootstrap Icon">
+                <h3>Responsive Design with Bootstrap</h3>
+                <p>Learn to create mobile-first, responsive designs quickly and efficiently using Bootstrap.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Backend Development</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/nodejs.png" alt="Node.js Icon">
+                <h3>Node.js & Express.js</h3>
+                <p>Develop robust and scalable server-side applications with JavaScript and Express.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/python.png" alt="Python Icon">
+                <h3>Python Backend & Django/Flask</h3>
+                <p>Dive into Python for web development with powerful frameworks like Django and Flask.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/database.png" alt="Database Icon">
+                <h3>Advanced Database Management</h3>
+                <p>Master SQL and NoSQL databases, including MongoDB and PostgreSQL, for data storage.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/api.png" alt="API Icon">
+                <h3>RESTful API Design & Development</h3>
+                <p>Learn to build and consume efficient and secure RESTful APIs for your applications.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Placement Roadmaps – Top Tech Companies</h2>
+        <div class="cards">
+            <div class="card">
+                <img src="https://logo.clearbit.com/tcs.com" alt="TCS Logo">
+                <h3>TCS Placement Drive</h3>
+                <p><b>Syllabus:</b> Java, Data Structures, OOPs, Networking. <b>Skills:</b> Problem Solving, Communication.</p>
+                <p><b>Roadmap:</b> Solidify basics → Practice competitive coding → Build personal projects → Ace technical & HR rounds.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/wipro.com" alt="Wipro Logo">
+                <h3>Wipro Hiring Challenge</h3>
+                <p><b>Syllabus:</b> Python, DBMS, Algorithms, Aptitude. <b>Skills:</b> Analytical Thinking, Teamwork.</p>
+                <p><b>Roadmap:</b> Strengthen core concepts → Solve previous year papers → Enhance logical reasoning → Group discussion mastery.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/capgemini.com" alt="Capgemini Logo">
+                <h3>Capgemini Campus Selection</h3>
+                <p><b>Syllabus:</b> HTML, CSS, JavaScript, Operating Systems. <b>Skills:</b> Time Management, Coding Logic.</p>
+                <p><b>Roadmap:</b> Frontend fundamentals → OS concepts → Quantitative aptitude → Mock interviews & communication practice.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/google.com" alt="Google Logo">
+                <h3>Google Interview Prep</h3>
+                <p><b>Syllabus:</b> Advanced Data Structures & Algorithms, System Design, Cloud. <b>Skills:</b> Innovative Problem-Solving, Leadership.</p>
+                <p><b>Roadmap:</b> LeetCode mastery → System design deep dive → Contribute to open source → Behavioral interview preparation.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/accenture.com" alt="Accenture Logo">
+                <h3>Accenture Career Launch</h3>
+                <p><b>Syllabus:</b> Java, SQL, Verbal Ability, Reasoning. <b>Skills:</b> Adaptability, Client Communication.</p>
+                <p><b>Roadmap:</b> Certifications in relevant tech → Focus on soft skills → Aptitude test strategies → Scenario-based interview practice.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft Logo">
+                <h3>Microsoft Talent Hunt</h3>
+                <p><b>Syllabus:</b> C++, Python, Cloud Platforms (Azure), OOPs. <b>Skills:</b> Logical Reasoning, Creativity.</p>
+                <p><b>Roadmap:</b> Build diverse projects → Participate in hackathons → Explore Microsoft technologies → Behavioral & technical interview drills.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/oracle.com" alt="Oracle Logo">
+                <h3>Oracle Professional Pathway</h3>
+                <p><b>Syllabus:</b> SQL, Java, Database Administration, Data Warehousing. <b>Skills:</b> Analytical Reasoning, Precision.</p>
+                <p><b>Roadmap:</b> Deep dive into SQL & Java → Database project work → Prepare for technical discussions → Behavioral assessment.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/infosys.com" alt="Infosys Logo">
+                <h3>Infosys Campus Connect</h3>
+                <p><b>Syllabus:</b> C Programming, Pseudo Code, Quantitative Aptitude, English. <b>Skills:</b> Teamwork, Attention to Detail.</p>
+                <p><b>Roadmap:</b> Foundational programming → Regular aptitude practice → Communication workshops → Technical & HR round simulations.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/ibm.com" alt="IBM Logo">
+                <h3>IBM New Collar Initiative</h3>
+                <p><b>Syllabus:</b> Cloud Technologies, AI/ML Basics, Programming Logic. <b>Skills:</b> Innovation, Collaboration.</p>
+                <p><b>Roadmap:</b> Explore IBM Cloud/Watson → Work on emerging tech projects → Participate in challenges → Behavioral and situational interviews.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/adobe.com" alt="Adobe Logo">
+                <h3>Adobe Creative Careers</h3>
+                <p><b>Syllabus:</b> UI/UX Principles, Software Development Lifecycle, C++/Java. <b>Skills:</b> Design Thinking, Problem-Solving.</p>
+                <p><b>Roadmap:</b> Build a strong portfolio → Master a programming language → Understand product development → Case study & technical interviews.</p>
+            </div>
+            <div class="card">
+                <img src="https://logo.clearbit.com/salesforce.com" alt="Salesforce Logo">
+                <h3>Salesforce Trailblazer Program</h3>
+                <p><b>Syllabus:</b> CRM Concepts, Apex (Java-like), Web Components, Data Modelling. <b>Skills:</b> Adaptability, Customer Focus.</p>
+                <p><b>Roadmap:</b> Salesforce Trailhead badges → Understand CRM ecosystem → Project work on platform → Scenario-based and technical interviews.</p>
+            </div>
+             <div class="card">
+                <img src="https://logo.clearbit.com/amazon.com" alt="Amazon Logo">
+                <h3>Amazon Future Builders</h3>
+                <p><b>Syllabus:</b> Data Structures, Algorithms, System Design, OS. <b>Skills:</b> Ownership, Bias for Action, Deliver Results.</p>
+                <p><b>Roadmap:</b> LeetCode hard problems → Dive deep into system architecture → Cloud (AWS) knowledge → Behavioral (LP) interviews.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimonials">
+        <h2>What Our Students Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <blockquote>"CollegePaglu transformed my career prospects! The courses are well-structured, and the placement roadmap was incredibly helpful. I landed my dream job thanks to their guidance."</blockquote>
+                <div class="author">Ananya Sharma</div>
+                <div class="role">Software Engineer at TCS</div>
+            </div>
+            <div class="testimonial-

@@ -246,5 +246,43 @@ if (!isNaN(birthYear) && birthYear > 1900 && birthYear <= new Date().getFullYear
 // }
 // processUserInput(greet); // Hello, [name]!
 
+// In javascript each object is linked to a prototype object.
+// The prototype contains methods that are accessible to all objects linked to that prototype.
+// This is  different from class-based inheritance in other programming languages. As their child classes inherit from parent classes.
+//      and in thi case it is like instance inheriting from class.
+// 
+
+// const person = {
+//   firstName: "John",
+//   lastName: "Doe",
+//  getFullName: function() {
+//     return `${this.firstName} ${this.lastName}`;
+//   },
+// };
+// const employee = Object.create(person);
+// employee.jobTitle = "Software Engineer";
+// console.log(employee.getFullName()); // John Doe
+// console.log(employee.jobTitle); // Software Engineer
+
+
+//  Prototype-based inheritance is a way to share properties and methods between objects.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  Prototype is also an object.
+//  Prototype chain is used to build new types of objects based on existing ones.
+//  All javascript objects inherit properties and methods from their prototype.
 
 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Demo</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 50px;
+      transition: background-color 0.5s ease;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="h1">Event Page</h1>
+  <button id="btn">Click Me</button>
+
+  <script>
+    const button = document.getElementById('btn');
+
+    function getRandomColor() {
+      return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    }
+
+    // Mouse Events
+    button.addEventListener('click', () => {
+      document.body.style.backgroundColor = getRandomColor();
+    });
+
+    button.addEventListener('mouseover', () => {
+      document.body.style.backgroundColor = getRandomColor();
+    });
+
+    button.addEventListener('dblclick', () => {
+      document.body.style.backgroundColor = getRandomColor();
+    });
+
+    button.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      document.body.style.backgroundColor = getRandomColor();
+    });
+
+    // Keyboard Events
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        document.body.style.backgroundColor = getRandomColor();
+      }
+    });
+
+    // Touch Events (for mobile)
+    document.addEventListener('touchstart', () => {
+      document.body.style.backgroundColor = getRandomColor();
+    });
+
+    // Window Events
+    window.addEventListener('resize', () => {
+      document.body.style.backgroundColor = getRandomColor();
+    });
+
+    window.addEventListener('scroll', () => {
+      document.body.style.backgroundColor = getRandomColor();
+    });
+  </script>
+</body>
+</html>
+
+<!-- 
+Task:
+make a form which takes three inputs:
+1. Company name
+2. motto
+3. image
+
+save these values in an object using javascript form event:
+and the create a card in JS - with this data using DOM manipulation. -->

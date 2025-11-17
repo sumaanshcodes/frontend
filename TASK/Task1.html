@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profile Editor — College Style</title>
+  <style>
+    :root{
+      --card-bg: #f4f6f8;
+      --card-accent: #2b8aef;
+      --card-text: #0b1320;
+      --accent-contrast: white;
+    }
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,#e9f0ff 0%,#fff 60%);padding:24px;color:var(--card-text)}
+    .wrap{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:20px}
+
+    /* Profile card */
+    .card{background:var(--card-bg);padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(11,19,32,0.06);display:flex;gap:16px;align-items:flex-start}
+    .card .avatar{width:96px;height:96px;border-radius:10px;object-fit:cover;border:4px solid rgba(255,255,255,0.6);background:#ddd}
+    .card .main{flex:1}
+    .name{font-size:1.4rem;font-weight:700;margin:0}
+    .role{font-size:0.9rem;color:#334155;margin:6px 0}
+    .bio{margin:8px 0;padding:8px;background:rgba(255,255,255,0.4);border-radius:6px;min-height:48px}
+    .bio.hidden{display:none}
+    .details{margin-top:10px;padding:10px;border-radius:8px;background:rgba(0,0,0,0.03)}
+    .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid rgba(11,19,32,0.06);font-size:0.85rem}
+    .chip .x{cursor:pointer;padding:2px 6px;border-radius:6px}
+    .chip.pop{
+      animation:pop .36s ease;
+    }
+    @keyframes pop{0%{transform:scale(.88);opacity:0}60%{transform:scale(1.06)}100%{transform:none;opacity:1}}
+
+    /* control panel */
+    .panel{background:white;padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(11,19,32,0.04)}
+    .field{margin-bottom:12px}
+    label{display:block;font-size:0.8rem;margin-bottom:6px;color:#334155}
+    input[type="text"],textarea,select{width:100%;padding:8px;border-radius:6px;border:1px solid #d1d5db;font-size:0.95rem}
+    .row{display:flex;gap:8px}
+    button{padding:8px 10px;border-radius:8px;border:0;background:var(--card-accent);color:var(--accent-contrast);cursor:pointer}
+    .btn-ghost{background:transparent;color:var(--card-accent);border:1px dashed rgba(11,19,32,0.06)}
+    .themes{display:flex;gap:8px;flex-wrap:wrap}
+    .theme{width:36px;height:36px;border-radius:8px;border:2px solid transparent;cursor:pointer}
+    .theme.active{outline:3px solid rgba(0,0,0,0.08)}
+
+    /* validation styles */
+    .name.invalid{outline:2px solid #ff6b6b}
+    .error{color:#b91c1c;font-size:0.85rem;margin-top:6px}
+
+    /* responsive */
+    @media (max-width:900px){.wrap{grid-template-columns:1fr;}}
+
+  </style>
+</head>
+<body>
+  <h1 style="margin-bottom:14px">Profile editor — college build</h1>
+  <div class="wrap" id="appRoot">
+
+    
+    <section class="card" id="profileCard">
+      <img id="profileImg" class="avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400&auto=format&fit=crop&s=placeholder" alt="avatar placeholder">
+      <div class="main">
+        <h2 id="displayName" class="name">Alex Johnson</h2>
+        <div id="displayRole" class="role">Frontend Student</div>
+        <div id="displayBio" class="bio">Loves JavaScript, late-night coffee, and building tiny useful apps.\nWrites poems on trains.</div>
+
+        <div class="skills" id="skillsContainer" aria-live="polite">
+          <span class="chip">HTML <span class="x" data-action="remove">✕</span></span>
+          <span class="chip">CSS <span class="x" data-action="remove">✕</span></span>
+          <span class="chip">JS <span class="x" data-action="remove">✕</span></span>
+        </div>
+
+        <div id="detailsBlock" class="details">
+          <strong>Extra details</strong>
+          <p style="margin:6px 0 0 0;">Graduation year: 2026 · College: State University · Hobbies: Photography</p>
+        </div>
+      </div>
+    </section>
+
+    
+    <aside class="panel" id="controlPanel">
+      <div class="field">
+        <label for="nameInput">Name</label>
+        <input id="nameInput" type="text" value="Alex Johnson" />
+        <div id="nameError" class="error" style="display:none">Name cannot be empty</div>
+      </div>
+
+      <div class="field">
+        <label for="roleInput">Role</label>
+        <input id="roleInput" type="text" value="Frontend Student" />
+      </div>
+
+      <div class="field">
+        <label for="bioInput">Bio</label>
+        <textarea id="bioInput" rows="4">Loves JavaScript, late-night coffee, and building tiny useful apps.
+Writes poems on trains.</textarea>
+      </div>
+
+      <div class="field">
+        <label for="imgUrlInput">Avatar URL</label>
+        <input id="imgUrlInput" type="text" placeholder="paste image URL or leave blank" />
+        <div id="imgError" class="error" style="display:none">Image failed to load — using placeholder</div>
+      </div>
+
+      <div class="field row">
+        <div style="flex:1">
+          <label for="skillInput">Add skill</label>
+          <input id="skillInput" type="text" placeholder="e.g. React" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;justify-content:flex-end">
+          <button id="addSkillBtn">Add</button>
+          <button id="removeLastSkill" class="btn-ghost">Remove last</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Theme colors</label>
+        <div class="themes" id="themeChoices">
+          <button class="theme" data-color="#f4f6f8" title="Light" style="background:#f4f6f8"></button>
+          <button class="theme" data-color="#fff1f0" title="Warm" style="background:#fff1f0"></button>
+          <button class="theme" data-color="#e6f5ff" title="Blue" style="background:#e6f5ff"></button>
+          <button class="theme" data-color="#eefbf7" title="Green" style="background:#eefbf7"></button>
+          <button class="theme" data-color="#0ea5a3" title="Teal" style="background:#0ea5a3"></button>
+        </div>
+      </div>
+
+      <div class="field row">
+        <button id="toggleDetails">Hide details</button>
+        <button id="inspectBtn" class="btn-ghost">Inspect (console)</button>
+      </div>
+
+      <div style="margin-top:8px;font-size:0.85rem;color:#475569">
+        Tips: Press Enter in skill input to add. Double-click any text in the card to edit in-place. Changes are saved to localStorage.
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    // ---- element selection practice ----
+    // getElementById
+    const appRoot = document.getElementById('appRoot');
+    const profileCard = document.getElementById('profileCard');
+    const displayName = document.getElementById('displayName');
+    const displayRole = document.getElementById('displayRole');
+    const displayBio = document.getElementById('displayBio');
+
+    // getElementsByClassName (returns live HTMLCollection)
+    const chipCollection = document.getElementsByClassName('chip');
+
+    // getElementsByTagName
+    const allButtons = document.getElementsByTagName('button');
+
+    // querySelector & querySelectorAll
+    const firstThemeButton = document.querySelector('.theme');
+    const themeButtons = document.querySelectorAll('.theme');
+
+    // other elements
+    const nameInput = document.getElementById('nameInput');
+    const roleInput = document.getElementById('roleInput');
+    const bioInput = document.getElementById('bioInput');
+    const imgUrlInput = document.getElementById('imgUrlInput');
+    const profileImg = document.getElementById('profileImg');
+    const skillInput = document.getElementById('skillInput');
+    const addSkillBtn = document.getElementById('addSkillBtn');
+    const skillsContainer = document.getElementById('skillsContainer');
+    const removeLastSkill = document.getElementById('removeLastSkill');
+    const toggleDetails = document.getElementById('toggleDetails');
+    const detailsBlock = document.getElementById('detailsBlock');
+    const nameError = document.getElementById('nameError');
+    const imgError = document.getElementById('imgError');
+    const inspectBtn = document.getElementById('inspectBtn');
+
+    // Mini function: log nodeName and classList of each child of profile card
+    function logProfileChildren(){
+      console.log('Children of #profileCard:');
+      Array.from(profileCard.children).forEach(child=>{
+        console.log(child.nodeName, child.classList ? child.classList.toString() : '');
+      });
+    }
+
+    // ---- Live updates: textContent vs innerText ----
+    nameInput.addEventListener('input', e=>{
+      const v = e.target.value.trim();
+      displayName.textContent = v || '— no name —';
+      validateName(v);
+      saveState();
+    });
+
+    roleInput.addEventListener('input', e=>{ displayRole.textContent = e.target.value; saveState(); });
+
+    // bio: use innerText so newlines render similar to how the browser shows
+    bioInput.addEventListener('input', e=>{
+      displayBio.innerText = e.target.value; // preserves newlines in a friendly way
+      saveState();
+    });
+
+    // ---- image attribute manipulation ----
+    imgUrlInput.addEventListener('change', e=>{
+      const url = e.target.value.trim();
+      if(!url){
+        // remove src attribute
+        profileImg.removeAttribute('src');
+        imgError.style.display='none';
+        saveState();
+        return;
+      }
+
+      // set via property (absolute URL may be resolved)
+      profileImg.src = url;
+      // also set alt using setAttribute
+      profileImg.setAttribute('alt','profile picture for ' + (nameInput.value || 'user'));
+      saveState();
+    });
+
+    // handle broken image
+    profileImg.addEventListener('error', ()=>{
+      imgError.style.display='block';
+      // fallback placeholder
+      profileImg.src = 'https://via.placeholder.com/96?text=No+img';
+      // store that placeholder
+      saveState();
+    });
+
+    profileImg.addEventListener('load', ()=>{ imgError.style.display='none'; });
+
+    // ---- themes: dataset, classList, style ----
+    themeButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const color = btn.dataset.color;
+        // set inline style for card background
+        profileCard.style.backgroundColor = color;
+
+        // make button active
+        themeButtons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // if a dark-ish color, change text color
+        const c = color.replace('#','');
+        // crude luminance guess: check if hex length == 6
+        if(c.length===6){
+          const r = parseInt(c.substr(0,2),16);
+          const g = parseInt(c.substr(2,2),16);
+          const b2 = parseInt(c.substr(4,2),16);
+          const lum = (0.2126*r + 0.7152*g + 0.0722*b2);
+          if(lum < 120){ document.documentElement.style.setProperty('--card-text','#ffffff'); }
+          else { document.documentElement.style.setProperty('--card-text','#0b1320'); }
+        }
+        saveState();
+      });
+    });
+
+    // select first theme as active on load
+    if(firstThemeButton) firstThemeButton.classList.add('active');
+
+    // ---- skills: createElement, appendChild, event delegation ----
+    function createChip(text){
+      const chip = document.createElement('span');
+      chip.className='chip pop';
+      chip.textContent = text + ' ';
+      const x = document.createElement('span');
+      x.className='x';
+      x.setAttribute('data-action','remove');
+      x.textContent='✕';
+      chip.appendChild(x);
+      return chip;
+    }
+
+    function addSkill(text){
+      const t = (text||'').trim();
+      if(!t) return false;
+      const chip = createChip(t);
+      skillsContainer.appendChild(chip);
+      console.log('skill count: ', document.querySelectorAll('.skill, .chip').length);
+      // briefly remove the pop class after animation so it can re-animate next time
+      setTimeout(()=>chip.classList.remove('pop'),400);
+      saveState();
+      return true;
+    }
+
+    addSkillBtn.addEventListener('click', ()=>{
+      if(addSkill(skillInput.value)) skillInput.value='';
+    });
+
+    // keyboard: Enter adds skill, Escape clears
+    skillInput.addEventListener('keydown', e=>{
+      if(e.key==='Enter'){ e.preventDefault(); if(addSkill(skillInput.value)) skillInput.value=''; }
+      if(e.key==='Escape'){ skillInput.value=''; }
+    });
+
+    // event delegation for remove
+    skillsContainer.addEventListener('click', e=>{
+      const action = e.target.dataset.action;
+      if(action==='remove'){
+        const chip = e.target.closest('.chip');
+        if(chip) { chip.remove(); saveState(); }
+      }
+    });
+
+    removeLastSkill.addEventListener('click', ()=>{
+      const last = skillsContainer.lastElementChild;
+      if(last) { last.remove(); saveState(); }
+    });
+
+    // ---- details toggle: style vs class ----
+    let detailsVisible = true;
+    toggleDetails.addEventListener('click', ()=>{
+      // using class toggle
+      detailsVisible = !detailsVisible;
+      detailsBlock.classList.toggle('hidden', !detailsVisible);
+      toggleDetails.textContent = detailsVisible ? 'Hide details' : 'Show details';
+
+      // disable the image URL input when details are hidden (mini challenge)
+      imgUrlInput.disabled = !detailsVisible;
+      saveState();
+    });
+
+    // ---- small validation ----
+    function validateName(value){
+      if(!value){
+        displayName.classList.add('invalid');
+        nameError.style.display='block';
+        return false;
+      } else {
+        displayName.classList.remove('invalid');
+        nameError.style.display='none';
+        return true;
+      }
+    }
+
+    // initial validation
+    validateName(nameInput.value.trim());
+
+    // ---- debug inspect button ----
+    inspectBtn.addEventListener('click', ()=>{
+      console.dir(profileCard);
+      console.log('chipCollection (live):', chipCollection);
+      console.log('document.querySelectorAll(.skill).length ->', document.querySelectorAll('.skill').length);
+      logProfileChildren();
+    });
+
+    // ---- enable double-click editing (extension) ----
+    profileCard.addEventListener('dblclick', e=>{
+      const el = e.target.closest('.name, .role, .bio');
+      if(!el) return;
+      el.contentEditable = 'true';
+      el.focus();
+      // commit on blur
+      function commit(){
+        el.contentEditable = 'false';
+        // sync back to inputs
+        if(el.id==='displayName') nameInput.value = el.textContent.trim(), nameInput.dispatchEvent(new Event('input'));
+        if(el.id==='displayRole') roleInput.value = el.textContent.trim(), roleInput.dispatchEvent(new Event('input'));
+        if(el.id==='displayBio') bioInput.value = el.innerText, bioInput.dispatchEvent(new Event('input'));
+        el.removeEventListener('blur',commit);
+      }
+      el.addEventListener('blur', commit);
+    });
+
+    // ---- persistence (localStorage) ----
+    const STORAGE_KEY = 'college_profile_v1';
+    function saveState(){
+      const state = {
+        name: nameInput.value,
+        role: roleInput.value,
+        bio: bioInput.value,
+        img: profileImg.getAttribute('src') || null,
+        imgAlt: profileImg.getAttribute('alt') || null,
+        skills: Array.from(skillsContainer.querySelectorAll('.chip')).map(c=>c.childNodes[0].nodeValue.trim()),
+        cardBg: profileCard.style.backgroundColor || null,
+        detailsVisible: !detailsBlock.classList.contains('hidden')
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return;
+        const s = JSON.parse(raw);
+        if(s.name) { nameInput.value = s.name; displayName.textContent = s.name; }
+        if(s.role) { roleInput.value = s.role; displayRole.textContent = s.role; }
+        if(s.bio) { bioInput.value = s.bio; displayBio.innerText = s.bio; }
+        if(s.img) { profileImg.src = s.img; }
+        if(s.imgAlt) profileImg.setAttribute('alt', s.imgAlt);
+        if(Array.isArray(s.skills)){
+          // clear existing except the container
+          skillsContainer.innerHTML='';
+          s.skills.forEach(skill=>{
+            const chip = createChip(skill);
+            skillsContainer.appendChild(chip);
+            setTimeout(()=>chip.classList.remove('pop'),400);
+          });
+        }
+        if(s.cardBg){ profileCard.style.backgroundColor = s.cardBg; }
+        if(s.detailsVisible===false){ detailsBlock.classList.add('hidden'); toggleDetails.textContent='Show details'; imgUrlInput.disabled = true; }
+      }catch(err){ console.warn('failed to load state',err); }
+    }
+
+    // load on start
+    loadState();
+
+    // expose a few utilities on window for tinkering in console (college style)
+    window._profile = {
+      logProfileChildren, addSkill, createChip, saveState, loadState
+    };
+
+    // small note: differences between childNodes vs children
+    // children -> Element nodes only; childNodes -> includes text nodes (whitespace/newlines)
+
+  </script>
+</body>
+</html>

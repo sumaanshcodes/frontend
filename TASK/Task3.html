@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Box Resize Task</title>
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      font-family: Arial, sans-serif;
+    }
+
+    .small-box {
+      width: 200px;
+      height: 200px;
+      background-color: teal;
+      transition: 0.4s ease;
+    }
+
+    .big-box {
+      width: 400px;
+      height: 400px;
+      background-color: crimson;
+      transition: 0.4s ease;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background: black;
+      color: white;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main>
+    <section>
+      <div id="box" class="small-box"></div>
+    </section>
+
+    <section>
+      <button id="btn">Click to Enlarge</button>
+    </section>
+  </main>
+
+  <script>
+    const box = document.getElementById("box");
+    const btn = document.getElementById("btn");
+
+    btn.addEventListener("click", () => {
+      box.classList.remove("small-box");
+      box.classList.add("big-box");
+      btn.textContent = "Box Enlarged";
+      btn.disabled = true;
+    });
+  </script>
+
+</body>
+</html>

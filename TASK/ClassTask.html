@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassTask</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #a75959;
+            border-radius: 5px;
+           
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="url"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        } 
+
+
+    </style>
+</head>
+<body>
+<!-- make a form which takes three inputs : 1. company name 2. motto 3. image url -->
+    <form id="companyForm">
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" required><br><br>
+
+        <label for="motto">Motto:</label>
+        <input type="text" id="motto" name="motto" required><br><br>
+
+        <label for="imageUrl">Image URL:</label>
+        <input type="url" id="imageUrl" name="imageUrl" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="cardContainer"></div>
+
+
+
+
+    
+</body>
+<!-- Save these values in an object using javascript form event: and then on submit create card in js - 
+ with this data using DOM manipulation -->
+<script>
+    const form = document.getElementById('companyForm');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get form values
+        const companyName = document.getElementById('companyName').value;
+        const motto = document.getElementById('motto').value;
+        const imageUrl = document.getElementById('imageUrl').value;
+
+        // Create an object to store the values
+        const companyData = {
+            name: companyName,
+            motto: motto,
+            image: imageUrl
+        };
+
+        // Create a card using DOM manipulation
+        const card = document.createElement('div');
+        card.style.border = '1px solid #ccc';
+        card.style.borderRadius = '5px';
+        card.style.padding = '15px';
+        card.style.marginTop = '20px';
+        card.style.maxWidth = '400px';
+        card.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+
+        const img = document.createElement('img');
+        img.src = companyData.image;
+        img.alt = companyData.name;
+        img.style.width = '100%';
+        img.style.borderRadius = '5px 5px 0 0';
+
+        const nameElem = document.createElement('h2');
+        nameElem.textContent = companyData.name;
+
+        const mottoElem = document.createElement('p');
+        mottoElem.textContent = companyData.motto;
+
+        card.appendChild(img);
+        card.appendChild(nameElem);
+        card.appendChild(mottoElem);
+
+        // Append the card to the body
+        document.body.appendChild(card);
+
+        // Reset the form
+        form.reset();
+    });
+</script>
+
+</html>
+
+
+
+<!--
+Topics to be covered:  DOM Manipulation 20 Marks(Very Important)
+Event
+Keyboard Events
+Mouse Events
+form events
+event capturing and bubbling
+
+-->
+

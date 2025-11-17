@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chessboard</title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #eee;
+    }
+
+    .chessboard {
+      display: grid;
+      grid-template-columns: repeat(8, 60px);
+      grid-template-rows: repeat(8, 60px);
+      border: 4px solid #333;
+    }
+
+    .light {
+      background: #f0d9b5;
+      width: 60px;
+      height: 60px;
+    }
+
+    .dark {
+      background: #b58863;
+      width: 60px;
+      height: 60px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="chessboard"></div>
+
+  <script>
+    const board = document.querySelector(".chessboard");
+
+    let row = 1;
+    for (let i = 1; i <= 64; i++) {
+      const box = document.createElement("div");
+      const isLight = row % 2 === 1 ? i % 2 === 1 : i % 2 === 0;
+      box.className = isLight ? "light" : "dark";
+      board.appendChild(box);
+      if (i % 8 === 0) row++;
+    }
+  </script>
+</body>
+</html>
